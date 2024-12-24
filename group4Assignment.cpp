@@ -4,8 +4,8 @@
 // Lecture Class: TC3L
 // Tutorial Class: TT5L
 // Trimester: 2430
-// Member_1: ID | NAME | EMAIL | PHONE
-// Member_2: 242UC244T5 | MUHAMMAD NUR AIZAD BIN MURYADHA | MUHAMMAD.NUR.AIZAD@student.mmu.edu.my | 0195659972
+// Member_1: 242UC244T5 | MUHAMMAD NUR AIZAD BIN MURTADHA | MUHAMMAD.NUR.AIZAD@student.mmu.edu.my | 0195659972
+// Member_2: 242UC242NF | LEE CHEE XUAN | LEE.CHEE.XUAN@student.mmu.edu.my | 01110510766
 // Member_3: 242UC2444H | NELSON NG YAOHAN | NELSON.NG.YAOHAN@student.mmu.edu.my | 0177470261
 // Member_4: 242UC244DJ | YUVENDAR A/L MARAN | yuvendar.maran@students.mmu.edu.my | +60127420244
 // ***************************************************************
