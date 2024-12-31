@@ -16,7 +16,8 @@
 // Member_4:
 // ***************************************************************
 
-#include<iostream>
+#include <iostream>
+#include <fstream>
 using namespace std;
 
 //Function protoypes
@@ -29,6 +30,8 @@ void insertRow();
 void updateTableRows();
 void deleteTableRows();
 void countShowRows();
+
+bool databaseExist = false;
 
 
 
@@ -49,7 +52,6 @@ int main()
         cout << "Press 8 to delete table rows\n";
         cout << "Press 9 to count and show number of rows in table\n";
         cout << "Press 0 to exit program\n\n";
-//test
 
         cin >> choice;
         cout << " \n";
@@ -74,6 +76,8 @@ int main()
                    break;
             case 9 :countShowRows();
                    break;
+            case 0 :
+                    break;
             default : cout << "Invalid input. Try again\n";
         }
     }while (choice != 0);
@@ -82,7 +86,32 @@ int main()
 
 void createDatabase()
 {
-    cout << "1 is pressed\n\n";
+    // https://www.tutorialspoint.com/cpp_standard_library/fstream.htm
+    // https://youtu.be/EaHFhms_Shw?si=ql9_pY7Zn8Sj5klt
+
+
+    ofstream outfile;
+    ifstream infile;
+    string databaseName;
+
+    if (databaseExist == false)
+    {
+        cout << "Input database name\n";
+        cin >> databaseName;
+
+        outfile.open(databaseName + ".txt"); //create database name
+
+        databaseExist = true;
+    }
+    else
+    {
+        cout <<"Database already exist\n\n";
+    }
+
+
+
+    //infile.close();
+    outfile.close();
 }
 
 void createTable()
