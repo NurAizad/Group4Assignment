@@ -32,6 +32,7 @@ void deleteTableRows();
 void countShowRows();
 
 bool databaseExist = false;
+string currentDatabase;
 
 
 
@@ -91,15 +92,15 @@ void createDatabase()
 
 
     ofstream outfile;
-    ifstream infile;
     string databaseName;
 
     if (databaseExist == false)
     {
         cout << "Input database name\n";
         cin >> databaseName;
+        currentDatabase = databaseName;
 
-        outfile.open(databaseName + ".txt"); //create database name
+        outfile.open(databaseName + ".txt"); //create database name ofstream = write
 
         databaseExist = true;
     }
@@ -108,9 +109,6 @@ void createDatabase()
         cout <<"Database already exist\n\n";
     }
 
-
-
-    //infile.close();
     outfile.close();
 }
 
@@ -120,7 +118,14 @@ void createTable()
 }
 void viewDatabaseName()
 {
-    cout << "3 is pressed\n\n";
+    if (databaseExist=true)
+    {
+        cout <<"Database name is " << currentDatabase << endl << endl;
+    }
+    else
+    {
+        cout<<"Database doesn't exist\n\n";
+    }
 }
 void viewTableName()
 {
