@@ -18,136 +18,65 @@
 
 #include <iostream>
 #include <fstream>
+#include <string>
+#include <vector>
 using namespace std;
 
+ //variable to place words in the input.txt
+
+
+
 //Function protoypes
-void createDatabase();
-void createTable();
-void viewDatabaseName();
-void viewTableName();
-void viewTableCSV();
-void insertRow();
-void updateTableRows();
-void deleteTableRows();
-void countShowRows();
-
-bool databaseExist = false;
-string currentDatabase;
-
-
+int insertTable(vector<string>);
 
 int main()
 {
-    int choice;
-    do
-    {
-        cout << "\t\tMENU OF OPERATIONS\n\n";
+    string words;
+    vector<string> wordsVector;
 
-        cout << "Press 1 to create database file\n";
-        cout << "Press 2 to create table in database file\n";
-        cout << "Press 3 to view database name\n";
-        cout << "Press 4 to view table name\n";
-        cout << "Press 5 to insert rows to table\n";
-        cout << "Press 6 to view table in CSV mode\n";
-        cout << "Press 7 to update table rows\n";
-        cout << "Press 8 to delete table rows\n";
-        cout << "Press 9 to count and show number of rows in table\n";
-        cout << "Press 0 to exit program\n\n";
+    insertTable(wordsVector);
 
-        cin >> choice;
-        cout << " \n";
 
-        switch(choice)
-        {
-            case 1 :createDatabase();
-                   break;
-            case 2 :createTable();
-                   break;
-            case 3 :viewDatabaseName();
-                   break;
-            case 4 :viewTableName();
-                   break;
-            case 5 :viewTableCSV();
-                   break;
-            case 6 :insertRow();
-                   break;
-            case 7 :updateTableRows();
-                   break;
-            case 8 :deleteTableRows();
-                   break;
-            case 9 :countShowRows();
-                   break;
-            case 0 :
-                    break;
-            default : cout << "Invalid input. Try again\n";
-        }
-    }while (choice != 0);
-
+    return 0;
 }
 
-void createDatabase()
+int insertTable(vector<string> vectorName)
 {
-    // https://www.tutorialspoint.com/cpp_standard_library/fstream.htm
-    // https://youtu.be/EaHFhms_Shw?si=ql9_pY7Zn8Sj5klt
-
+    ifstream infile;
+    infile.open("input.txt");
 
     ofstream outfile;
-    string databaseName;
+    outfile.open("output.txt");
 
-    if (databaseExist == false)
-    {
-        cout << "Input database name\n";
-        cin >> databaseName;
-        currentDatabase = databaseName;
-
-        outfile.open(databaseName + ".txt"); //create database name ofstream = write
-
-        databaseExist = true;
-    }
-    else
-    {
-        cout <<"Database already exist\n\n";
+    if (!infile) {
+        cout << "Error: Could not open the input file." <<endl;
+        return 1;
     }
 
+    if (!outfile) {
+        cout << "Error: Could not open the output file." <<endl;
+        return 1;
+    }
+
+    string line;
+    //string insertTableArray[];
+    // getline(where to read input from, input is stored in this object, delimter if tkde jadi \n)
+    while (getline(infile, line))
+    {
+        if (line.find("INSERT INTO"))
+        {
+            vectorName.push_back(line);
+        }
+    }
+
+    // for( declarationOfVariable : nameOfRange)
+    for (const string data : vectorName)
+    {
+        outfile << data << endl;
+    }
+
+    infile.close();
     outfile.close();
-}
 
-void createTable()
-{
-    cout << "2 is pressed\n\n";
-}
-void viewDatabaseName()
-{
-    if (databaseExist=true)
-    {
-        cout <<"Database name is " << currentDatabase << endl << endl;
-    }
-    else
-    {
-        cout<<"Database doesn't exist\n\n";
-    }
-}
-void viewTableName()
-{
-    cout << "4 is pressed\n\n";
-}
-void viewTableCSV()
-{
-    cout << "5 is pressed\n\n";
-}
-void insertRow()
-{
-    cout << "6 is pressed\n\n";
-}
-void updateTableRows()
-{
-    cout << "7 is pressed\n\n";
-}
-void deleteTableRows()
-{
-    cout << "8 is pressed\n\n";
-}
-void countShowRows()
-{
-    cout << "9 is pressed\n\n";
+    return 0;
 }
