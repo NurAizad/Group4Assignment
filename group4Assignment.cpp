@@ -20,27 +20,40 @@
 #include <fstream>
 #include <string>
 #include <vector>
+#include <sstream>
 using namespace std;
 
  //variable to place words in the input.txt
 
 
-
+//const int COLUMN_SIZE = 7;
+//const int ROW_SIZE = 4;
 //Function protoypes
-int insertTable(vector<string>);
+//int insertTable(string arrayName[ROW_SIZE][COLUMN_SIZE]);
+int insertTable(vector<vector<string>>&);
 
 int main()
 {
     string words;
-    vector<string> wordsVector;
+    //string wordsVector[ROW_SIZE][COLUMN_SIZE]; //2d array
+    vector<vector<string>> wordsVector;
 
     insertTable(wordsVector);
+
+    for (const vector<string> row : wordsVector)
+            {
+                for (const string words : row)
+                {
+                    cout << words << endl;
+                }
+            }
 
 
     return 0;
 }
 
-int insertTable(vector<string> vectorName)
+//int insertTable(string arrayName[ROW_SIZE][COLUMN_SIZE])
+int insertTable(vector<vector<string>>& vectorName)
 {
     ifstream infile;
     infile.open("input.txt");
@@ -59,20 +72,38 @@ int insertTable(vector<string> vectorName)
     }
 
     string line;
-    //string insertTableArray[];
-    // getline(where to read input from, input is stored in this object, delimter if tkde jadi \n)
+    // getline(where to read input from, input is stored in this object, delimter if tkde, jadi \n)
     while (getline(infile, line))
     {
-        if (line.find("INSERT INTO"))
-        {
-            vectorName.push_back(line);
-        }
-    }
 
-    // for( declarationOfVariable : nameOfRange)
-    for (const string data : vectorName)
-    {
-        outfile << data << endl;
+        if (line.find("VALUES(") != string::npos || line.find(");") != string::npos) // !=string;;npos means jumpa
+        {
+            int valuesStartPos = line.find("VALUES(")+7; //+7 to skip VALUES(
+            int valuesEndPos = line.find(");");
+
+            // substr(index of first char to be copied, length)
+            string valuesData = line.substr(valuesStartPos, valuesEndPos-valuesStartPos);
+            //cout << valuesData<<endl;
+
+            //stringstream class mcm input output
+            stringstream valuesDataSS(valuesData);
+            string words;
+            vector<string> row; //need this bcs 2d vector
+
+            while (getline(valuesDataSS, words, ','))//delimiter utk buang comma
+            {
+                if(words.front()=='\'' && words.back()=='\'') //utlk buang quote
+                {
+                    words = words.substr(1,words.size()-2); //kena -2 sbb ada 2 quotes
+                }
+                row.push_back(words);
+            }
+
+            vectorName.push_back(row); //row jadi mcm single element in vectorName
+
+
+
+        }
     }
 
     infile.close();
