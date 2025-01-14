@@ -31,12 +31,13 @@ using namespace std;
 //Function protoypes
 //int insertTable(string arrayName[ROW_SIZE][COLUMN_SIZE]);
 int insertTable(vector<vector<string>>&);
+int updateTable(vector<vector<string>>&);
 
 int main()
 {
     string words;
-    //string wordsVector[ROW_SIZE][COLUMN_SIZE]; //2d array
-    vector<vector<string>> wordsVector;
+
+    vector<vector<string>> wordsVector; // vector of a vector
 
     insertTable(wordsVector);
 
@@ -48,11 +49,24 @@ int main()
                 }
             }
 
+    cout <<""<<endl<<endl;
+
+    updateTable(wordsVector);
+    for (const vector<string> row : wordsVector)
+            {
+                for (const string words : row)
+                {
+                    cout << words << endl;
+                }
+            }
+
+
+
 
     return 0;
 }
 
-//int insertTable(string arrayName[ROW_SIZE][COLUMN_SIZE])
+
 int insertTable(vector<vector<string>>& vectorName)
 {
     ifstream infile;
@@ -76,7 +90,7 @@ int insertTable(vector<vector<string>>& vectorName)
     while (getline(infile, line))
     {
 
-        if (line.find("VALUES(") != string::npos || line.find(");") != string::npos) // !=string;;npos means jumpa
+        if (line.find("VALUES(") != string::npos || line.find(");") != string::npos) //string;;npos means no position or tk jumpa
         {
             int valuesStartPos = line.find("VALUES(")+7; //+7 to skip VALUES(
             int valuesEndPos = line.find(");");
@@ -111,3 +125,69 @@ int insertTable(vector<vector<string>>& vectorName)
 
     return 0;
 }
+
+
+int updateTable(vector<vector<string>>& vectorName)
+{
+    ifstream infile;
+    infile.open("input.txt");
+
+    ofstream outfile;
+    outfile.open("output.txt");
+
+    if (!infile) {
+        cout << "Error: Could not open the input file." <<endl;
+        return 1;
+    }
+
+    if (!outfile) {
+        cout << "Error: Could not open the output file." <<endl;
+        return 1;
+    }
+
+    string line;
+    while(getline(infile,line))
+    {
+        if (line.find("SET") != string::npos || line.find(";") != string::npos)
+        {
+            int changeToPos = line.find("SET")+20; //tunjuk kat email333, SKIPS SET customer_email='
+            int updateEndPos = line.find("WHERE")-2;//skips space and '
+
+            //now tunjuk email333 only
+            string updatedData = line.substr(changeToPos, updateEndPos-changeToPos);//email333
+
+            int customerIDPos = line.find("WHERE")+18; // skips WHERE customer_id=
+            int customerIDEndPos = line.find(";");
+
+
+            string updatedID = line.substr(customerIDPos, customerIDEndPos-customerIDPos);
+
+            vector<string> row;
+            for(vector<string>&row : vectorName)
+            {
+                if(row[0]==updatedID)
+                {
+                    row[6]=updatedData; //row[6] is pos of email3 in the vector
+                }
+            }
+            /* 2d vector ;llike this
+            vector<vector<int>> vectorName
+            vectorName ada 3 elements
+            each row is a vector itself
+
+            {  {a,b,c},
+               {d,e,f},
+               {g,h,i}
+            }
+            */
+
+
+
+        }
+
+
+
+    }
+
+}
+
